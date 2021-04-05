@@ -1,0 +1,57 @@
+REATE TABLE IF NOT EXISTS Dept_M (
+     sid INT UNIQUE,
+     did INT NOT NULL UNIQUE,
+     dname VARCHAR(30) NOT NULL UNIQUE,
+     INDEX par_in (did) ,
+     CONSTRAINT fk_dept FOREIGN KEY (sid)  
+     REFERENCES Student(sid),   
+     CONSTRAINT u_p UNIQUE (dname, did)
+  
+     );
+
+
+ CREATE TABLE IF NOT EXISTS Student(
+     sid INT NOT NULL UNIQUE,
+     sname VARCHAR(20) NOT NULL UNIQUE,
+     age INT  NOT NULL UNIQUE,
+     CGPA NUMERIC (2,2) CHECK(CGPA < 10 and CGPA > 0),
+     PRIMARY KEY(sid, sname) ,
+     CONSTRAINT u_s UNIQUE (sid, sname, age, CGPA)
+
+     );
+
+
+
+--  drop a UNIQUE constraint from Student and Dept_M Table
+
+	ALTER TABLE Student
+DROP INDEX u_s;
+
+--  drop a UNIQUE constraint
+	ALTER TABLE Dept_M
+DROP INDEX u_p;
+
+
+-- DROP a FOREIGN KEY Constraint from Dept_M Table
+
+
+ALTER TABLE Dept_M
+DROP FOREIGN KEY fk_dept;
+
+
+-- emove the NOT NULL constraint from Student and Dept_M
+
+ALTER TABLE Student MODIFY age INT NULL;
+
+
+
+ALTER TABLE Dept_M MODIFY did INT NULL;
+ALTER TABLE Dept_M MODIFY dname INT NULL;
+
+-- DROP a PRIMARY KEY Constraint from student and dept_m  table
+
+
+ALTER TABLE Student
+DROP PRIMARY KEY;
+
+
